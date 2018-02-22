@@ -5,7 +5,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.wf.etp.authz.annotation.RequiresPermissions;
 import com.wf.ew.core.PageResult;
 import com.wf.ew.core.utils.StringUtil;
 import com.wf.ew.system.model.LoginRecord;
@@ -26,7 +25,6 @@ public class LoginRecordController {
 	 * 查询所有登录日志
 	 * @return
 	 */
-	@RequiresPermissions("system/loginRecord")
 	@GetMapping()
 	public PageResult<LoginRecord> list(Integer page, Integer limit,String startDate,String endDate,String account){
 		if(StringUtil.isBlank(startDate)){

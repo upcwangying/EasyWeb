@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.wf.etp.authz.SubjectUtil;
 import com.wf.etp.authz.annotation.RequiresPermissions;
 import com.wf.ew.core.BaseController;
 import com.wf.ew.core.PageResult;
@@ -72,9 +73,11 @@ public class UserController extends BaseController {
 	 * @param user
 	 * @return
 	 */
+	@RequiresPermissions("system/user")
 	@PutMapping()
 	public ResultMap update(User user) {
 		if(userService.updateUser(user)){
+			SubjectUtil.getInstance().updateCacheRoles(user.getUserId());
 			return ResultMap.ok("修改成功！");
 		}else{
 			return ResultMap.error("修改失败！");
@@ -87,10 +90,11 @@ public class UserController extends BaseController {
 	 * @return
 	 * @throws ParameterException 
 	 */
-	@RequiresPermissions("system/user")
+	@RequiresPermissions("user:delete")
 	@PutMapping("status")
 	public ResultMap updateStatus(String userId, int status) throws ParameterException {
 		if(userService.updateUserStatus(userId, status)){
+			SubjectUtil.getInstance().expireToken(userId);
 			return ResultMap.ok();
 		}else{
 			return ResultMap.error();
@@ -102,19 +106,23 @@ public class UserController extends BaseController {
 	 * @param userIds
 	 * @return
 	 */
+	@RequiresPermissions("user:delete")
 	@PutMapping("psw")
 	public ResultMap updatePsw(String newPsw, HttpServletRequest request) {
-		if(userService.updateUserPsw(getUserId(request), newPsw)) {
+		String userId = getUserId(request);
+		if(userService.updateUserPsw(userId, newPsw)) {
+			SubjectUtil.getInstance().expireToken(userId);
 			return ResultMap.ok();
 		}else{
 			return ResultMap.error();
 		}
 	}
 	
-	@RequiresPermissions("system/user")
+	@RequiresPermissions("user:delete")
 	@DeleteMapping("/{userId}")
 	public ResultMap delete(@PathVariable("userId") String userId) {
 		if(userService.deleteUser(userId)){
+			SubjectUtil.getInstance().expireToken(userId);
 			return ResultMap.ok("删除成功");
 		}else{
 			return ResultMap.error("删除失败");

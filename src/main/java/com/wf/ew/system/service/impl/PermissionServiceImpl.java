@@ -58,12 +58,19 @@ public class PermissionServiceImpl implements PermissionService {
 	}
 
 	@Override
-	public List<Permission> getParentPermissions() {
-		PermissionExample example = new PermissionExample();
-		example.setOrderByClause("order_number asc");
-		PermissionExample.Criteria criteria = example.createCriteria();
-		criteria.andParentIdEqualTo("0");
-		return permissionMapper.selectByExample(example);
+	public List<Permission> getParentPermissions(int type) {
+		List<Permission> result;
+		if(type==0){
+			PermissionExample example = new PermissionExample();
+			example.setOrderByClause("order_number asc");
+			PermissionExample.Criteria criteria = example.createCriteria();
+			criteria.andParentIdEqualTo("0");
+			criteria.andPermissionTypeEqualTo(0);
+			result = permissionMapper.selectByExample(example);
+		}else{
+			result = permissionMapper.selectButtonParent();
+		}
+		return result;
 	}
 
 	@Override

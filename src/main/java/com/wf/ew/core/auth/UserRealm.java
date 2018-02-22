@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import com.wf.etp.authz.IUserRealm;
 import com.wf.etp.authz.SubjectUtil;
 import com.wf.ew.system.model.Permission;
+import com.wf.ew.system.model.User;
 import com.wf.ew.system.service.PermissionService;
 import com.wf.ew.system.service.UserService;
 
@@ -27,7 +28,10 @@ public class UserRealm extends IUserRealm {
 	@Override
 	public Set<String> getUserRoles(String userId) {
 		Set<String> roles = new HashSet<String>();
-		roles.add(userService.getUserById(userId).getRoleId());
+		User user = userService.getUserById(userId);
+		if(user != null){
+			roles.add(user.getRoleId());
+		}
 		return roles;
 	}
 
@@ -38,7 +42,10 @@ public class UserRealm extends IUserRealm {
 		if(userRoles.size()>0){
 			List<Permission> permissions = permissionService.getPermissionsByRoleId(userRoles.get(0));
 			for (int i = 0; i < permissions.size(); i++) {
-				permissionValues.add(permissions.get(i).getPermissionValue());
+				String permissionValue = permissions.get(i).getPermissionValue();
+				if(permissionValue!=null){
+					permissionValues.add(permissionValue);
+				}
 			}
 		}
 		return permissionValues;

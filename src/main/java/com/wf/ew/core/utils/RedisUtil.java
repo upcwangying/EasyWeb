@@ -25,6 +25,22 @@ public class RedisUtil {
 	public void setRedisTemplate(StringRedisTemplate redisTemplate) {
 		this.redisTemplate = redisTemplate;
 	}
+	
+	public StringRedisTemplate getRedisTemplate(){
+		return this.redisTemplate;
+	}
+	
+	public void delete(String key){
+		redisTemplate.delete(key);
+	}
+	
+	public void delete(Collection<String> keys){
+		redisTemplate.delete(keys);
+	}
+	
+	public Set<String> keys(String pattern){
+		return redisTemplate.keys(pattern);
+	}
 
 	/**
 	 * 

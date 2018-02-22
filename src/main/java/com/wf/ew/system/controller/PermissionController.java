@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.wf.etp.authz.SubjectUtil;
 import com.wf.etp.authz.annotation.RequiresPermissions;
 import com.wf.ew.core.PageResult;
 import com.wf.ew.core.ResultMap;
@@ -72,10 +73,12 @@ public class PermissionController {
 	/**
 	 * 修改角色权限
 	 */
+	@RequiresPermissions("system/role")
 	@PutMapping("/tree")
 	public ResultMap updatePermTree(String roleId, String permIds){
 		List<String> permissionIds = JSONUtil.parseArray(permIds);
 		if(authService.updateRolePermission(roleId, permissionIds)){
+			SubjectUtil.getInstance().updateCachePermission();
 			return ResultMap.ok("修改成功");
 		}else{
 			return ResultMap.error("修改失败");
@@ -85,9 +88,9 @@ public class PermissionController {
 	/**
 	 * 查询所有的父菜单
 	 */
-	@GetMapping("/parent")
-	public List<Permission> listParent(){
-		return menuService.getParentPermissions();
+	@GetMapping("/parent/{type}")
+	public List<Permission> listParent(@PathVariable("type") int type){
+		return menuService.getParentPermissions(type);
 	}
 	
 	/**
@@ -123,7 +126,7 @@ public class PermissionController {
 	/**
 	 * 修改状态
 	 */
-	@RequiresPermissions("system/permission")
+	@RequiresPermissions("permission:delete")
 	@PutMapping("status")
 	public ResultMap updateStatus(String permissionId, int status) throws ParameterException {
 		if(menuService.updatePermissionStatus(permissionId, status)){
@@ -135,7 +138,7 @@ public class PermissionController {
 	/**
 	 * 删除
 	 */
-	@RequiresPermissions("system/permission")
+	@RequiresPermissions("permission:delete")
 	@DeleteMapping("/{permissionId}")
 	public ResultMap delete(@PathVariable("permissionId")String permissionId) throws BusinessException {
 		if(menuService.delete(permissionId)){

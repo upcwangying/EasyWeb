@@ -44,7 +44,7 @@ public interface PermissionService {
 	 * 
 	 * @return
 	 */
-	public List<Permission> getParentPermissions();
+	public List<Permission> getParentPermissions(int type);
 
 	/**
 	 * 得到所有的非一级权限

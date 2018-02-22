@@ -38,4 +38,6 @@ public interface PermissionMapper {
     
     public List<Permission> selectPermissionByUserId(String userId);
     
+    public List<Permission> selectButtonParent();
+    
 }

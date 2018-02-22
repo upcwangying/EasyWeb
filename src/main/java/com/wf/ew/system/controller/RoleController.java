@@ -1,7 +1,6 @@
 package com.wf.ew.system.controller;
 
 import java.io.UnsupportedEncodingException;
-import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -17,9 +16,7 @@ import com.wf.ew.core.PageResult;
 import com.wf.ew.core.ResultMap;
 import com.wf.ew.core.exception.BusinessException;
 import com.wf.ew.core.exception.ParameterException;
-import com.wf.ew.system.model.MenuTree;
 import com.wf.ew.system.model.Role;
-import com.wf.ew.system.service.AuthService;
 import com.wf.ew.system.service.RoleService;
 
 /**
@@ -91,7 +88,7 @@ public class RoleController {
 	 * @return
 	 * @throws ParameterException
 	 */
-	@RequiresPermissions("system/role")
+	@RequiresPermissions("role:delete")
 	@PutMapping("/status")
 	public ResultMap updateStatus(String roleId, int status)
 			throws ParameterException {
@@ -109,7 +106,7 @@ public class RoleController {
 	 * @return
 	 * @throws BusinessException 
 	 */
-	@RequiresPermissions("system/role")
+	@RequiresPermissions("role:delete")
 	@DeleteMapping("/{id}")
 	public ResultMap delete(@PathVariable("id") String roleId) throws BusinessException {
 		if (roleService.deleteById(roleId)) {

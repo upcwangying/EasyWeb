@@ -37,6 +37,8 @@ $(function() {
 				layer.closeAll('page');
 				layui.table.reload('table', {});
 				layer.closeAll('loading');
+				parents1 = null;
+				parents2 = null;
 			}else{
 				layer.msg(data.msg,{icon: 2});
 			}
@@ -79,6 +81,7 @@ function showEditModel(data){
 	$("#editForm")[0].reset();
 	$("#editForm").attr("method","POST");
 	var selectItem = "";
+	var type = 0;
 	if(data!=null){
 		$("#editForm input[name=permissionId]").val(data.permissionId);
 		$("#editForm input[name=permissionName]").val(data.permissionName);
@@ -86,6 +89,7 @@ function showEditModel(data){
 		$("#editForm input[name=orderNumber]").val(data.orderNumber);
 		$("#editForm").attr("method","PUT");
 		selectItem = data.parentId;
+		type = data.permissionType;
 		if(0==data.permissionType){
 			$("#type0").attr("checked","checked");
 			$("#type1").removeAttr("checked");
@@ -99,12 +103,18 @@ function showEditModel(data){
 		layer.closeAll('page');
 	});
 	
-	getParents(selectItem);
+	getParents(selectItem,type);
+	//
+	layui.form.on('radio(permissionType)', function(data){
+		getParents(selectItem, data.value);
+	});  
 }
 
-//获取所有角色
-var parents = null;
-function getParents(selectItem){
+//获取所有父级菜单
+var parents1 = null;
+var parents2 = null;
+function getParents(selectItem,type){
+	var parents = (type==0?parents1:parents2);
 	if(parents!=null) {
 		layui.laytpl(parentsSelect.innerHTML).render(parents, function(html){
 			$("#parent-select").html(html);
@@ -114,11 +124,15 @@ function getParents(selectItem){
 		});
 	}else{
 		layer.load(1);
-		$.get("api/permission/parent",{
+		$.get("api/permission/parent/"+type,{
 			token: getToken()
 		}, function(data){
-			parents = data;
-			getParents(selectItem);
+			if (type==0) {
+				parents1 = data;
+			}else{
+				parents2 = data;
+			}
+			getParents(selectItem,type);
 		});
 	}
 }
@@ -137,6 +151,8 @@ function doDelete(obj){
 				if(data.code==200){
 					layer.msg(data.msg,{icon: 1});
 					obj.del();
+					parents1 = null;
+					parents2 = null;
 				}else{
 					layer.msg(data.msg,{icon: 2});
 				}

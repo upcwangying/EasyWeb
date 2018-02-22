@@ -315,4 +315,7 @@
 	SELECT a.* FROM sys_permission a,sys_role_permission b,sys_user c WHERE a.permission_id=b.permission_id AND b.role_id=c.role_id AND c.user_id=#{userId} AND a.is_delete=0 AND a.permission_type=0 ORDER BY order_number
 	</select>
 	
+	<select id="selectButtonParent" resultMap="BaseResultMap">
+	SELECT a.* FROM sys_permission a WHERE a.parent_id!='0' AND a.permission_type='0' OR a.parent_id='0' AND a.permission_type='1'
+	</select>
 </mapper>
