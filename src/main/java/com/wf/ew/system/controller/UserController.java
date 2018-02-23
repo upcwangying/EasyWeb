@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.wf.etp.authz.SubjectUtil;
-import com.wf.etp.authz.annotation.RequiresPermissions;
+import com.wf.etp.authz.annotation.RequiresRoles;
 import com.wf.ew.core.BaseController;
 import com.wf.ew.core.PageResult;
 import com.wf.ew.core.ResultMap;
@@ -36,13 +36,11 @@ public class UserController extends BaseController {
 	
 	/**
 	 * 查询所有用户
-	 * @return
-	 * @throws UnsupportedEncodingException 
 	 */
 	@GetMapping()
 	public PageResult<User> list(Integer page, Integer limit, Integer status, String searchKey, String searchValue) throws UnsupportedEncodingException {
-		if(searchValue!=null){
-			searchValue = new String(searchValue.getBytes("ISO-8859-1"),"UTF-8");
+		if(searchValue != null){
+			searchValue = new String(searchValue.getBytes("ISO-8859-1"), "UTF-8");
 		}
 		if(page == null) {
 			page = 0;
@@ -53,11 +51,8 @@ public class UserController extends BaseController {
 	
 	/**
 	 * 添加用户
-	 * @param user
-	 * @return
-	 * @throws BusinessException 
 	 */
-	@RequiresPermissions("system/user")
+	@RequiresRoles("admin")
 	@PostMapping()
 	public ResultMap add(User user) throws BusinessException {
 		user.setUserPassword("123456");
@@ -70,10 +65,8 @@ public class UserController extends BaseController {
 	
 	/**
 	 * 修改用户
-	 * @param user
-	 * @return
 	 */
-	@RequiresPermissions("system/user")
+	@RequiresRoles("admin")
 	@PutMapping()
 	public ResultMap update(User user) {
 		if(userService.updateUser(user)){
@@ -86,11 +79,8 @@ public class UserController extends BaseController {
 	
 	/**
 	 * 修改用户状态
-	 * @param userId
-	 * @return
-	 * @throws ParameterException 
 	 */
-	@RequiresPermissions("user:delete")
+	@RequiresRoles("admin")
 	@PutMapping("status")
 	public ResultMap updateStatus(String userId, int status) throws ParameterException {
 		if(userService.updateUserStatus(userId, status)){
@@ -102,11 +92,8 @@ public class UserController extends BaseController {
 	}
 	
 	/**
-	 * 修改密码
-	 * @param userIds
-	 * @return
+	 * 修改自己密码
 	 */
-	@RequiresPermissions("user:delete")
 	@PutMapping("psw")
 	public ResultMap updatePsw(String newPsw, HttpServletRequest request) {
 		String userId = getUserId(request);
@@ -118,9 +105,12 @@ public class UserController extends BaseController {
 		}
 	}
 	
-	@RequiresPermissions("user:delete")
+	/**
+	 * 删除用户
+	 */
+	@RequiresRoles("admin")
 	@DeleteMapping("/{userId}")
-	public ResultMap delete(@PathVariable("userId") String userId) {
+	public ResultMap delete(@PathVariable("userId") String userId) throws BusinessException {
 		if(userService.deleteUser(userId)){
 			SubjectUtil.getInstance().expireToken(userId);
 			return ResultMap.ok("删除成功");

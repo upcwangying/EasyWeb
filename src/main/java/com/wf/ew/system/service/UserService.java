@@ -14,61 +14,43 @@ import com.wf.ew.system.model.User;
 public interface UserService {
 
 	/**
-	 * 根据账号查询用户
-	 * 
-	 * @param userAccount
-	 * @return
-	 */
-	public User getUserByAccount(String userAccount);
-
-	/**
-	 * 根据userId查询User
-	 * 
-	 * @param userId
-	 * @return
-	 */
-	public User getUserById(String userId);
-
-	/**
-	 * 查询所有的用户
-	 * 
-	 * @return
+	 * 查询所有用户
 	 */
 	public PageResult<User> getUsers(int pageNum, int pageSize, Integer status, String searchKey, String searchValue);
 
 	/**
+	 * 根据账号查询用户
+	 */
+	public User getUserByAccount(String userAccount);
+
+	/**
+	 * 根据id查询用户
+	 */
+	public User getUserById(String userId);
+
+	/**
 	 * 添加用户
-	 * 
-	 * @param user
-	 * @return
 	 */
 	public boolean addUser(User user) throws BusinessException;
 
 	/**
-	 * 根据id修改用户
-	 * 
-	 * @param user
-	 * @return
+	 * 修改用户
 	 */
 	public boolean updateUser(User user);
 
 	/**
 	 * 修改用户状态
-	 * 
-	 * @param userId
-	 * @return
 	 */
 	public boolean updateUserStatus(String userId, int status) throws ParameterException;
 
 	/**
-	 * 根据id重置密码
-	 * 
-	 * @param userIds
-	 * @return
+	 * 修改密码
 	 */
-	public boolean updateUserPsw(String userId, String password);
+	public boolean updateUserPsw(String userId, String newPassword);
 	
-	//删除用户
-	public boolean deleteUser(String userId);
+	/**
+	 * 删除用户
+	 */
+	public boolean deleteUser(String userId) throws BusinessException;
 
 }

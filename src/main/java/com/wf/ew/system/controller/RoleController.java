@@ -33,14 +33,11 @@ public class RoleController {
 
 	/**
 	 * 查询所有角色
-	 * 
-	 * @return
-	 * @throws UnsupportedEncodingException 
 	 */
 	@GetMapping()
 	public PageResult<Role> list(Integer page, Integer limit, String searchKey, String searchValue, Integer isDelete) throws UnsupportedEncodingException {
-		if(searchValue!=null){
-			searchValue = new String(searchValue.getBytes("ISO-8859-1"),"UTF-8");
+		if(searchValue != null){
+			searchValue = new String(searchValue.getBytes("ISO-8859-1"), "UTF-8");
 		}
 		if(page == null) {
 			page = 0;
@@ -51,9 +48,6 @@ public class RoleController {
 	
 	/**
 	 * 添加角色
-	 * 
-	 * @param user
-	 * @return
 	 */
 	@RequiresPermissions("system/role")
 	@PostMapping()
@@ -67,9 +61,6 @@ public class RoleController {
 
 	/**
 	 * 修改角色
-	 * 
-	 * @param user
-	 * @return
 	 */
 	@RequiresPermissions("system/role")
 	@PutMapping()
@@ -83,12 +74,8 @@ public class RoleController {
 
 	/**
 	 * 修改状态
-	 * 
-	 * @param userId
-	 * @return
-	 * @throws ParameterException
 	 */
-	@RequiresPermissions("role:delete")
+	@RequiresPermissions("system/role")
 	@PutMapping("/status")
 	public ResultMap updateStatus(String roleId, int status)
 			throws ParameterException {
@@ -101,15 +88,11 @@ public class RoleController {
 
 	/**
 	 * 删除角色
-	 * 
-	 * @param roleId
-	 * @return
-	 * @throws BusinessException 
 	 */
-	@RequiresPermissions("role:delete")
+	@RequiresPermissions("system/role")
 	@DeleteMapping("/{id}")
 	public ResultMap delete(@PathVariable("id") String roleId) throws BusinessException {
-		if (roleService.deleteById(roleId)) {
+		if (roleService.deleteRole(roleId)) {
 			return ResultMap.ok("删除成功");
 		}
 		return ResultMap.error("删除失败");

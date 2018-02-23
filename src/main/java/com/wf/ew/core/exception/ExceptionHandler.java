@@ -30,7 +30,7 @@ public class ExceptionHandler implements HandlerExceptionResolver {
 		} else if(ex instanceof EtpException){
 			writerJson(response, ((EtpException) ex).getCode(), ex.getMessage());
 		} else {
-			writerJson(response, 500, "未知错误，请稍后再试！");
+			writerJson(response, 500, "未知错误，请稍后再试");
 			logger.error(ex.getMessage(), ex.getCause());
 			ex.printStackTrace();
 		}

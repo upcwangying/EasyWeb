@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.wf.etp.authz.SubjectUtil;
 import com.wf.etp.authz.annotation.RequiresPermissions;
+import com.wf.etp.authz.annotation.RequiresRoles;
 import com.wf.ew.core.PageResult;
 import com.wf.ew.core.ResultMap;
 import com.wf.ew.core.exception.BusinessException;
@@ -39,27 +40,17 @@ public class PermissionController {
 	
 	/**
 	 * 查询所有菜单
-	 * @return
-	 * @throws UnsupportedEncodingException 
 	 */
 	@GetMapping()
 	public PageResult<Permission> list(Integer page, Integer limit, String searchKey, String searchValue) throws UnsupportedEncodingException{
-		if(searchValue!=null){
-			searchValue = new String(searchValue.getBytes("ISO-8859-1"),"UTF-8");
+		if(searchValue != null){
+			searchValue = new String(searchValue.getBytes("ISO-8859-1"), "UTF-8");
 		}
 		if(page == null) {
 			page = 0;
 			limit = 0;
 		}
 		return menuService.getPermissions(page, limit, searchKey, searchValue);
-	}
-	
-	/**
-	 * 根据roleId查询所有菜单
-	 */
-	@GetMapping("/role{roleId}")
-	public List<Permission> list(@PathVariable("roleId") String roleId){
-		return menuService.getPermissionsByRoleId(roleId);
 	}
 	
 	/**
@@ -73,7 +64,7 @@ public class PermissionController {
 	/**
 	 * 修改角色权限
 	 */
-	@RequiresPermissions("system/role")
+	@RequiresRoles("admin")
 	@PutMapping("/tree")
 	public ResultMap updatePermTree(String roleId, String permIds){
 		List<String> permissionIds = JSONUtil.parseArray(permIds);
@@ -95,8 +86,6 @@ public class PermissionController {
 	
 	/**
 	 * 添加菜单
-	 * @param user
-	 * @return
 	 */
 	@RequiresPermissions("system/permission")
 	@PostMapping()
@@ -110,8 +99,6 @@ public class PermissionController {
 	
 	/**
 	 * 修改菜单
-	 * @param user
-	 * @return
 	 */
 	@RequiresPermissions("system/permission")
 	@PutMapping()
@@ -126,7 +113,7 @@ public class PermissionController {
 	/**
 	 * 修改状态
 	 */
-	@RequiresPermissions("permission:delete")
+	@RequiresPermissions("system/permission")
 	@PutMapping("status")
 	public ResultMap updateStatus(String permissionId, int status) throws ParameterException {
 		if(menuService.updatePermissionStatus(permissionId, status)){
@@ -138,10 +125,10 @@ public class PermissionController {
 	/**
 	 * 删除
 	 */
-	@RequiresPermissions("permission:delete")
+	@RequiresPermissions("system/permission")
 	@DeleteMapping("/{permissionId}")
-	public ResultMap delete(@PathVariable("permissionId")String permissionId) throws BusinessException {
-		if(menuService.delete(permissionId)){
+	public ResultMap delete(@PathVariable("permissionId") String permissionId) throws BusinessException {
+		if(menuService.deletePermission(permissionId)){
 			return ResultMap.ok("删除成功");
 		}
 		return ResultMap.error("删除失败");

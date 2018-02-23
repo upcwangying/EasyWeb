@@ -17,69 +17,42 @@ public interface PermissionService {
 
 	/**
 	 * 获取用户的菜单导航
-	 * 
-	 * @param userId
-	 * @return
 	 */
-	public List<Permission> getUserMenus(String userId);
+	public List<Permission> getMenusByUser(String userId);
 
 	/**
 	 * 根据角色id查询权限
-	 * 
-	 * @param roleId
-	 * @return
 	 */
-	public List<Permission> getPermissionsByRoleId(String roleId);
+	public List<Permission> getPermissionsByRole(String roleId);
 
 	/**
-	 * 根据角色类型查询权限
-	 * 
-	 * @param permissionType
-	 * @return
+	 * 查询所有权限
 	 */
 	public PageResult<Permission> getPermissions(Integer page, Integer limit, String searchKey, String searchValue);
 
 	/**
-	 * 得到所有的一级权限
-	 * 
-	 * @return
+	 * 查询权限或按钮的父级列表
 	 */
 	public List<Permission> getParentPermissions(int type);
 
 	/**
-	 * 得到所有的非一级权限
-	 * 
-	 * @return
-	 */
-	public List<Permission> getSubPermissions();
-
-	/**
 	 * 添加权限
-	 * 
-	 * @param permission
-	 * @return
 	 */
 	public boolean addPermission(Permission permission);
 
 	/**
-	 * 根据id修改权限
-	 * 
-	 * @param permission
-	 * @return
+	 * 修改权限
 	 */
 	public boolean updatePermission(Permission permission);
 
 	/**
-	 * 修改状态
-	 * 
-	 * @param isDelete
-	 *            0正常,1删除
-	 * @return
+	 * 修改权限状态
 	 */
-	public boolean updatePermissionStatus(String permissionId, int isDelete)
-			throws ParameterException;
+	public boolean updatePermissionStatus(String permissionId, int isDelete) throws ParameterException;
 	
-	//删除
-	public boolean delete(String permissionId) throws BusinessException;
+	/**
+	 * 删除权限
+	 */
+	public boolean deletePermission(String permissionId) throws BusinessException;
 
 }

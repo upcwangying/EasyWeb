@@ -75,7 +75,7 @@ public class LoginController extends BaseController {
 	 */
 	@GetMapping("/menu")
 	public ResultMap navMenu(HttpServletRequest request) {
-		return ResultMap.ok().put("menus", permissionService.getUserMenus(getUserId(request)));
+		return ResultMap.ok().put("menus", permissionService.getMenusByUser(getUserId(request)));
 	}
 	
 	/**

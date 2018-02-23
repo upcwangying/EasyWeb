@@ -24,7 +24,7 @@ public class PermissionServiceImpl implements PermissionService {
 	private PermissionMapper permissionMapper;
 
 	@Override
-	public List<Permission> getUserMenus (String userId) {
+	public List<Permission> getMenusByUser(String userId) {
 		List<Permission> results = new ArrayList<Permission>();
 		List<Permission> permissions = permissionMapper.selectPermissionByUserId(userId);
 		for(Permission one1 : permissions) {
@@ -53,7 +53,7 @@ public class PermissionServiceImpl implements PermissionService {
 	}
 
 	@Override
-	public List<Permission> getPermissionsByRoleId(String roleId) {
+	public List<Permission> getPermissionsByRole(String roleId) {
 		return permissionMapper.selectPermissionByRoleId(roleId);
 	}
 
@@ -71,17 +71,6 @@ public class PermissionServiceImpl implements PermissionService {
 			result = permissionMapper.selectButtonParent();
 		}
 		return result;
-	}
-
-	@Override
-	public List<Permission> getSubPermissions() {
-		PermissionExample example = new PermissionExample();
-		example.setOrderByClause("order_number asc");
-		PermissionExample.Criteria criteria = example.createCriteria();
-		criteria.andParentIdNotEqualTo("0");
-		criteria.andPermissionTypeEqualTo(0);
-		List<Permission> list = permissionMapper.selectByExample(example);
-		return list;
 	}
 
 	@Override
@@ -111,7 +100,7 @@ public class PermissionServiceImpl implements PermissionService {
 	}
 
 	@Override
-	public boolean delete(String permissionId) throws BusinessException {
+	public boolean deletePermission(String permissionId) throws BusinessException {
 		try{
 			return permissionMapper.deleteByPrimaryKey(permissionId)>0;
 		}catch (Exception e) {

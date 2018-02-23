@@ -40,10 +40,10 @@ public class UserRealm extends IUserRealm {
 		Set<String> permissionValues = new HashSet<String>();
 		List<String> userRoles = SubjectUtil.getInstance().getUserRoles(userId);
 		if(userRoles.size()>0){
-			List<Permission> permissions = permissionService.getPermissionsByRoleId(userRoles.get(0));
+			List<Permission> permissions = permissionService.getPermissionsByRole(userRoles.get(0));
 			for (int i = 0; i < permissions.size(); i++) {
 				String permissionValue = permissions.get(i).getPermissionValue();
-				if(permissionValue!=null){
+				if(permissionValue!=null && !permissionValue.isEmpty()){
 					permissionValues.add(permissionValue);
 				}
 			}

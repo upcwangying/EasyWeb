@@ -74,12 +74,12 @@ public class RoleServiceImpl implements RoleService {
 	}
 
 	@Override
-	public boolean deleteById(String roleId) throws BusinessException {
+	public boolean deleteRole(String roleId) throws BusinessException {
 		try {
 			return roleBaseMapper.deleteByPrimaryKey(roleId)>0;
 		} catch (Exception e) {
 			e.printStackTrace();
-			throw new BusinessException("角色已经被使用,无法删除");
+			throw new BusinessException("角色已被关联");
 		}
 	}
 }

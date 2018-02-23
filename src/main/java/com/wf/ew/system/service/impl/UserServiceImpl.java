@@ -90,7 +90,12 @@ public class UserServiceImpl implements UserService {
 	}
 
 	@Override
-	public boolean deleteUser(String userId) {
-		return userMapper.deleteByPrimaryKey(userId)>0;
+	public boolean deleteUser(String userId) throws BusinessException {
+		try{
+			return userMapper.deleteByPrimaryKey(userId)>0;
+		}catch (Exception e) {
+			e.printStackTrace();
+			throw new BusinessException("用户已被关联");
+		}
 	}
 }
