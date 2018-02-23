@@ -1,8 +1,8 @@
-# EasyWeb-RESTful
+# EasyWeb
 ## 简介
 前后端分离模式的后端管理系统平台，后端接口遵循RESTful风格设计，前端页面使用路由实现单页面效果。<br/>
-演示地址：[http://115.159.40.243:8080/EasyWeb-RESTful](http://115.159.40.243:8080/EasyWeb-RESTful/login.html)。<br/>
-演示账号：admin 密码：123456  
+演示地址：[http://115.159.40.243:8080/EasyWeb](http://115.159.40.243:8080/EasyWeb)。<br/>
+演示账号：easyweb 密码：123456  
    
 ## 使用技术
    此项目本着轻量、简洁、不多添加一个无用包的原则，特意精挑细选了如下的几个技术框架：
@@ -18,7 +18,7 @@
 
 前端 | ... 
 :---:|:---
-核心框架(轻量简洁) | [Layui](http://www.layui.com/)、jQuery、zTree
+核心框架(轻量简洁) | [Layui](http://www.layui.com/)、jQuery
 路由框架(纯js打造) | [Q.js](https://github.com/itorr/q.js) (超级轻量、简单易学)
 
 ------------------------
