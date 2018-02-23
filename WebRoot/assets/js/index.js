@@ -24,7 +24,9 @@ $(function() {
 		$.post("api/user/psw", data.field, function(data){
 			if(data.code==200){
 				layer.msg(data.msg,{icon: 1});
-				loginOut();
+				setTimeout(function() {
+					loginOut();
+				}, 1500);
 			}else{
 				layer.closeAll('loading');
 				layer.msg(data.msg,{icon: 2});
@@ -69,8 +71,11 @@ function initNav(){
 			if(200==data.code){
 				sessionStorage.setItem("index-nav",JSON.stringify(data.menus));
 				initNav();
+			}else if(401==data.code){
+				layer.msg(data.message,{icon: 2});
+				loginOut();
 			}else{
-				layer.msg("获取导航失败",{icon: 2});
+				layer.msg("获取导航失败，请刷新页面",{icon: 2});
 			}
 		},"json");
 	}else{
