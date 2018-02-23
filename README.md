@@ -24,11 +24,11 @@
 ------------------------
 
 ## 项目截图
-![登录](https://github.com/whvcse/EasyWeb-RESTful/blob/master/WebRoot/assets/images/screenshot_login.png) 
-![用户管理](https://github.com/whvcse/EasyWeb-RESTful/blob/master/WebRoot/assets/images/screenshot_user.png)
-![角色管理](https://github.com/whvcse/EasyWeb-RESTful/blob/master/WebRoot/assets/images/screenshot_role.png)
-![权限管理](https://github.com/whvcse/EasyWeb-RESTful/blob/master/WebRoot/assets/images/screenshot_permission.png)
-![登录日志](https://github.com/whvcse/EasyWeb-RESTful/blob/master/WebRoot/assets/images/screenshot_loginrecode.png)
+![登录](https://raw.githubusercontent.com/whvcse/EasyWeb/master/WebRoot/assets/images/screenshot_login.png) 
+![用户管理](https://raw.githubusercontent.com/whvcse/EasyWeb/master/WebRoot/assets/images/screenshot_user.png)
+![角色管理](https://raw.githubusercontent.com/whvcse/EasyWeb/master/WebRoot/assets/images/screenshot_role.png)
+![权限管理](https://raw.githubusercontent.com/whvcse/EasyWeb/master/WebRoot/assets/images/screenshot_permission.png)
+![登录日志](https://raw.githubusercontent.com/whvcse/EasyWeb/master/WebRoot/assets/images/screenshot_loginrecode.png)
  
  ---------------------------
  
@@ -82,7 +82,7 @@
     
 ## 联系方式
 ### 1、欢迎加入“前后端分离技术交流群”：
-![群二维码](https://github.com/whvcse/EasyWeb-RESTful/blob/master/WebRoot/assets/images/images_qqgroup.png)
+![群二维码](https://raw.githubusercontent.com/whvcse/EasyWeb/master/WebRoot/assets/images/images_qqgroup.png)
       
 ### 2、赞赏项目：
 右上角点个star就行！多谢！ 
