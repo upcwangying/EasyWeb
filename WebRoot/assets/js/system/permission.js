@@ -16,8 +16,8 @@ $(function() {
 			{field:'orderNumber', sort: true,title: '排序号'},
 			{field:'permissionType', sort: true, templet:function(d){ return d.permissionType==0?'菜单':'按钮'; }, title: '类型'},
 			{field:'createTime', sort: true, templet:function(d){ return layui.util.toDateString(d.createTime); }, title: '创建时间'},
-			{field:'isDelete', sort: true, templet: '#statusTpl', title: '状态'},
-			{align:'center', toolbar: '#barTpl', title: '操作'}
+			{field:'isDelete', sort: true, templet: '#statusTpl',width: 80, title: '状态'},
+			{align:'center', toolbar: '#barTpl', minWidth: 110, title: '操作'}
     	]]
 	});
 	
@@ -32,11 +32,11 @@ $(function() {
 		data.field._method = $("#editForm").attr("method");
 		layer.load(1);
 		$.post("api/permission", data.field, function(data){
+			layer.closeAll('loading');
 			if(data.code==200){
 				layer.msg(data.msg,{icon: 1});
 				layer.closeAll('page');
 				layui.table.reload('table', {});
-				layer.closeAll('loading');
 				parents1 = null;
 				parents2 = null;
 			}else{

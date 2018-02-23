@@ -15,7 +15,6 @@ import com.wf.ew.core.exception.ParameterException;
 import com.wf.ew.core.utils.UUIDUtil;
 import com.wf.ew.system.dao.UserMapper;
 import com.wf.ew.system.model.User;
-import com.wf.ew.system.model.UserExample;
 import com.wf.ew.system.service.UserService;
 
 @Service(value="userService")
@@ -64,15 +63,7 @@ public class UserServiceImpl implements UserService {
 
 	@Override
 	public User getUserByAccount(String userAccount) {
-		UserExample userExample = new UserExample();
-		UserExample.Criteria criteria = userExample.createCriteria();
-		criteria.andUserAccountEqualTo(userAccount);
-		List<User> list = userMapper.selectByExample(userExample);
-		if(list!=null&&list.size()>0){
-			return list.get(0);
-		}else{
-			return null;
-		}
+		return userMapper.selectUserByAccount(userAccount);
 	}
 
 	@Override

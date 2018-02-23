@@ -16,8 +16,8 @@ $(function() {
 			{field:'sex', sort: true, title: '性别'},
 			{field:'roleName', sort: true,title: '角色'},
 			{field:'createTime', sort: true, templet:function(d){ return layui.util.toDateString(d.createTime); }, title: '创建时间'},
-			{field:'userStatus', sort: true, templet: '#statusTpl', title: '状态'},
-			{align:'center', toolbar: '#barTpl', title: '操作'}
+			{field:'userStatus', sort: true, templet: '#statusTpl',width: 80, title: '状态'},
+			{align:'center', toolbar: '#barTpl', minWidth: 180, title: '操作'}
     	]]
 	});
 	
@@ -32,11 +32,11 @@ $(function() {
 		data.field._method = $("#editForm").attr("method");
 		layer.load(1);
 		$.post("api/user", data.field, function(data){
+			layer.closeAll('loading');
 			if(data.code==200){
 				layer.msg(data.msg,{icon: 1});
 				layer.closeAll('page');
 				layui.table.reload('table', {});
-				layer.closeAll('loading');
 			}else{
 				layer.msg(data.msg,{icon: 2});
 			}
@@ -53,6 +53,8 @@ $(function() {
 			showEditModel(data);
 		} else if(layEvent === 'del'){ //删除
 			doDelete(obj);
+		} else if(layEvent === 'reset'){ //重置密码
+			doReSet(obj.data.userId);
 		}
 	});
 	
@@ -176,4 +178,23 @@ function doSearch(table){
 		key = '';
 	}
 	layui.table.reload('table', {where: {searchKey: key,searchValue: value}});
+}
+
+//删除
+function doReSet(userId){
+	layer.confirm('确定要重置密码吗？', function(index){
+		layer.close(index);
+		layer.load(1);
+		$.post("api/user/psw/"+userId, {
+			token: getToken(), 
+			_method: "PUT"
+		}, function(data){
+			layer.closeAll('loading');
+			if(data.code==200){
+				layer.msg(data.msg,{icon: 1});
+			}else{
+				layer.msg(data.msg,{icon: 2});
+			}
+		},"JSON");
+	});
 }

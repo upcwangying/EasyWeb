@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.wangfan.endecrypt.utils.EndecryptUtils;
 import com.wf.etp.authz.SubjectUtil;
 import com.wf.etp.authz.annotation.RequiresRoles;
 import com.wf.ew.core.BaseController;
@@ -57,9 +58,9 @@ public class UserController extends BaseController {
 	public ResultMap add(User user) throws BusinessException {
 		user.setUserPassword("123456");
 		if(userService.addUser(user)){
-			return ResultMap.ok("添加成功！");
+			return ResultMap.ok("添加成功");
 		}else{
-			return ResultMap.error("添加失败，请重试！");
+			return ResultMap.error("添加失败，请重试");
 		}
 	}
 	
@@ -71,9 +72,9 @@ public class UserController extends BaseController {
 	public ResultMap update(User user) {
 		if(userService.updateUser(user)){
 			SubjectUtil.getInstance().updateCacheRoles(user.getUserId());
-			return ResultMap.ok("修改成功！");
+			return ResultMap.ok("修改成功");
 		}else{
-			return ResultMap.error("修改失败！");
+			return ResultMap.error("修改失败");
 		}
 	}
 	
@@ -95,8 +96,13 @@ public class UserController extends BaseController {
 	 * 修改自己密码
 	 */
 	@PutMapping("psw")
-	public ResultMap updatePsw(String newPsw, HttpServletRequest request) {
+	public ResultMap updatePsw(String oldPsw, String newPsw, HttpServletRequest request) {
 		String userId = getUserId(request);
+		String encryPsw = EndecryptUtils.encrytMd5(oldPsw, userId, 3);
+		User tempUser = userService.getUserById(userId);
+		if(tempUser==null||!encryPsw.equals(tempUser.getUserPassword())){
+			return ResultMap.error("旧密码输入不正确");
+		}
 		if(userService.updateUserPsw(userId, newPsw)) {
 			SubjectUtil.getInstance().expireToken(userId);
 			return ResultMap.ok();
@@ -116,6 +122,20 @@ public class UserController extends BaseController {
 			return ResultMap.ok("删除成功");
 		}else{
 			return ResultMap.error("删除失败");
+		}
+	}
+	
+	/**
+	 * 重置密码
+	 */
+	@RequiresRoles("admin")
+	@PutMapping("psw/{userId}")
+	public ResultMap resetPsw(@PathVariable("userId") String userId, HttpServletRequest request) {
+		if(userService.updateUserPsw(userId, "123456")) {
+			SubjectUtil.getInstance().expireToken(userId);
+			return ResultMap.ok();
+		}else{
+			return ResultMap.error();
 		}
 	}
 }

@@ -13,8 +13,8 @@ $(function() {
 			{field:'roleName', sort: true, title: '角色名'},
 			{field:'comments', sort: true, title: '备注'},
 			{field:'createTime', sort: true, templet:function(d){ return layui.util.toDateString(d.createTime); }, title: '创建时间'},
-			{field:'isDelete', sort: true, templet: '#statusTpl', title: '状态'},
-			{align:'center', toolbar: '#barTpl', title: '操作'}
+			{field:'isDelete', sort: true, templet: '#statusTpl',width: 80, title: '状态'},
+			{align:'center', toolbar: '#barTpl', minWidth: 180, title: '操作'}
     	]]
 	});
 	
@@ -29,11 +29,11 @@ $(function() {
 		data.field._method = $("#editForm").attr("method");
 		layer.load(1);
 		$.post("api/role", data.field, function(data){
+			layer.closeAll('loading');
 			if(data.code==200){
 				layer.msg(data.msg,{icon: 1});
 				layer.closeAll('page');
 				layui.table.reload('table', {});
-				layer.closeAll('loading');
 			}else{
 				layer.msg(data.msg,{icon: 2});
 			}

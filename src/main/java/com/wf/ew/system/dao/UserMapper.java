@@ -30,4 +30,6 @@ public interface UserMapper {
     int updateByPrimaryKey(User record);
     
     public List<User> selectUsers(@Param("status") Integer status, @Param("searchKey") String searchKey, @Param("searchValue") String searchValue);
+    
+    public User selectUserByAccount(String userAccount);
 }

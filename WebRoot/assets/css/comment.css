@@ -127,6 +127,7 @@
 	display: inline-block;
 }
 
+/*表单弹窗样式*/
 .model-form {
 	padding-top: 30px;
 	padding-right: 45px;
@@ -134,4 +135,12 @@
 
 .model-form-footer {
 	text-align: right;
+}
+
+/*列表样式*/
+.site-dir li {
+    line-height: 26px;
+    margin-left: 20px;
+    overflow: visible;
+    list-style-type: disc;
 }

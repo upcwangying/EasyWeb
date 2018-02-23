@@ -87,7 +87,7 @@ public class PermissionController {
 	/**
 	 * 添加菜单
 	 */
-	@RequiresPermissions("system/permission")
+	@RequiresRoles("admin")
 	@PostMapping()
 	public ResultMap add(Permission permission){
 		if(menuService.addPermission(permission)){
@@ -100,7 +100,7 @@ public class PermissionController {
 	/**
 	 * 修改菜单
 	 */
-	@RequiresPermissions("system/permission")
+	@RequiresRoles("admin")
 	@PutMapping()
 	public ResultMap update(Permission permission){
 		if(menuService.updatePermission(permission)){
@@ -113,7 +113,7 @@ public class PermissionController {
 	/**
 	 * 修改状态
 	 */
-	@RequiresPermissions("system/permission")
+	@RequiresRoles("admin")
 	@PutMapping("status")
 	public ResultMap updateStatus(String permissionId, int status) throws ParameterException {
 		if(menuService.updatePermissionStatus(permissionId, status)){
