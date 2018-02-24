@@ -5,23 +5,38 @@
 演示账号：easyweb 密码：123456  
    
 ## 使用技术
-   此项目本着轻量、简洁、不多添加一个无用包的原则，特意精挑细选了如下的几个技术框架：
+   此项目本着轻量、简洁、不多添加一个无用包的原则，特意精挑细选了如下的几个技术框架，本项目的sql文件位于/WebRoot/sql/目录中：
 
 后端 | ... 
 :---:|:---
 核心框架 | spring、springmvc、mybatis
 连接池 | Alibaba Druid
 缓存框架 | Redis、[RedisUtil](https://github.com/whvcse/RedisUtil)
-权限框架 | [JwtPermission](https://github.com/whvcse/EasyTokenPermission)、jjwt
+权限框架 | [JwtPermission](https://github.com/whvcse/JwtPermission)、jjwt
 图片验证码(支持gif) | [EasyCaptcha](https://github.com/whvcse/EasyCaptcha)
 密码加密 | [EndecryptUtil](https://github.com/whvcse/EndecryptUtil)
 
 前端 | ... 
 :---:|:---
-核心框架(轻量简洁) | [Layui](http://www.layui.com/)、jQuery
+核心框架(轻量简洁) | [Layui](http://www.layui.com/)、[jQuery](http://jquery.cuishifeng.cn/)
 路由框架(纯js打造) | [Q.js](https://github.com/itorr/q.js) (超级轻量、简单易学)
 
 ------------------------
+
+## API接口
+部分接口示例，全部接口请查看项目的controller层：
+|              |         api        | 请求方式 |        请求参数       |
+|--------------|:------------------:|----------|:---------------------:|
+|     登录     | /api/login         |   post   | account、password     |
+|   导航菜单   | /api/menu          |    get   | token                 |
+|   用户列表   | /api/user          |    get   | token                 |
+|   添加用户   | /api/user          |   post   | token、user           |
+|   修改用户   | /api/user          |    put   | token、user           |
+| 修改用户状态 | /api/user/status   |    put   | token、userId、status |
+|   删除用户   | /api/user/{usetId} |  delete  | token                 |
+|   用户信息   | /api/user/{userId} |    get   | token                 |
+|      ...     |         ...        |    ...   |          ...          |
+这里接口全部加/api/前缀是因为前后端在一个项目里面，为了方便区分静态资源和接口，实际项目建议前后端分开部署，分开部署需要解决跨域问题。
 
 ## 项目截图
 ![登录](https://raw.githubusercontent.com/whvcse/EasyWeb/master/WebRoot/assets/images/screenshot_login.png) 
@@ -42,6 +57,7 @@
 对于职业前端人员来说，用Vue、React并不是什么稀奇的事情，但是对于一个后端人员来说就很尴尬了，虽然说前后端分离，开发人员也应该分离，但是有多少
 公司正是因为前端人员的缺乏依然再使用古老的开发方式，有使用iframe的，有使用SiteMesh、甚至还有使用jsp的，  但是前端的技术多种多样，作为一个
 后端人员完全没有精力去学习，大多数人都是只会一个jquery和bootstrap。 所以这里我选用了Q.js作为路由框架，选用layui作为核心框架，我个人是比较喜欢layui的数据表格的，以前用过EasyUI的表格，用过bootstarp的数据表格，EasyUI样式太丑，BootstrapTable的js功能太弱。
+会使用Vue或者React的朋友可以自己写页面，对于前后端分离项目前端和后端是没有任何联系的。
        
 ### 说明3、为什么非要吹捧前后端分离？
 关于前后端分离的讨论可以移步知乎去看看大家的看法，我个人有以下几个观点：
