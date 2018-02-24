@@ -25,6 +25,7 @@
 
 ## API接口
 部分接口示例，全部接口请查看项目的controller层：
+
 |              |         api        | 请求方式 |        请求参数       |
 |--------------|:------------------:|----------|:---------------------:|
 |     登录     | /api/login         |   post   | account、password     |
@@ -36,7 +37,10 @@
 |   删除用户   | /api/user/{usetId} |  delete  | token                 |
 |   用户信息   | /api/user/{userId} |    get   | token                 |
 |      ...     |         ...        |    ...   |          ...          |
+
 这里接口全部加/api/前缀是因为前后端在一个项目里面，为了方便区分静态资源和接口，实际项目建议前后端分开部署，分开部署需要解决跨域问题。
+
+-----
 
 ## 项目截图
 ![登录](https://raw.githubusercontent.com/whvcse/EasyWeb/master/WebRoot/assets/images/screenshot_login.png) 
