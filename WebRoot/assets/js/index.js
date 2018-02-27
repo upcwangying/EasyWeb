@@ -72,8 +72,11 @@ function initNav(){
 				sessionStorage.setItem("index-nav",JSON.stringify(data.menus));
 				initNav();
 			}else if(401==data.code){
+				console.log(data.message);
 				layer.msg(data.message,{icon: 2});
-				loginOut();
+				setTimeout(function() {
+					loginOut();
+				}, 1500);
 			}else{
 				layer.msg("获取导航失败，请刷新页面",{icon: 2});
 			}

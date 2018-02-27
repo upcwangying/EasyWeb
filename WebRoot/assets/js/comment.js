@@ -1,33 +1,14 @@
-var sideNavExpand = true;  //导航栏是否折叠
+//var sideNavExpand = true;  //导航栏是否展开
 $(function() {
 	if(getCurrentUser()==null){
 		location.replace("login.html");
 	}
 	//切换导航栏按钮点击事件
 	$("#switchNav").click(function(){
+		var sideNavExpand = !$('body').hasClass('nav-mini');
 		switchNav(!sideNavExpand);
-		sideNavExpand = !sideNavExpand;
 	});
 });
-
-//折叠显示导航栏
-function switchNav(expand){
-	if(expand) {
-		$(".layui-layout-admin .layui-side").animate({left:'0px'});
-		$(".layui-layout-admin .layui-header .layui-logo").animate({left:'0px'});
-		$(".layui-layout-admin .layui-header .layui-layout-left").animate({left:'250px'});
-		$(".layui-layout-admin .layui-body").animate({left:'250px'});
-		$(".layui-layout-admin .layui-footer").animate({left:'250px'});
-		$('#switchNav>i').html('&#xe668;');
-	} else {
-		$(".layui-layout-admin .layui-side").animate({left:'-250px'});
-		$(".layui-layout-admin .layui-header .layui-logo").animate({left:'-250px'});
-		$(".layui-layout-admin .layui-header .layui-layout-left").animate({left:'0px'});
-		$(".layui-layout-admin .layui-body").animate({left:'0px'});
-		$(".layui-layout-admin .layui-footer").animate({left:'0px'});
-		$('#switchNav>i').html('&#xe66b;');
-	}
-}
 
 //获取当前token
 function getToken() {
@@ -47,4 +28,23 @@ function activeNav(path_name){
 	$a.parent("dd").addClass("layui-this");
 	$a.parent("dd").parent("dl.layui-nav-child").parent("li.layui-nav-item").addClass("layui-nav-itemed");
 	layui.element.render('nav', 'index-nav');
+}
+
+//折叠显示导航栏
+function switchNav(expand){
+	var sideNavExpand = !$('body').hasClass('nav-mini');
+	if(expand==sideNavExpand){
+		return;
+	}
+	if (!expand) {
+        $('.layui-side .layui-nav .layui-nav-item.layui-nav-itemed').removeClass('layui-nav-itemed');
+        $('body').addClass('nav-mini');
+    }else{
+        $('body').removeClass('nav-mini');
+    }
+	$('.nav-mini .layui-side .layui-nav .layui-nav-item').hover(function(){
+		layer.tips('只想提示地精准些', this);
+	},function(){
+		layer.closeAll('tips');
+	});
 }

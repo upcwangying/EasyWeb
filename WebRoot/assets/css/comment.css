@@ -6,15 +6,16 @@
 
 /**重写侧边栏的宽度*/
 .layui-layout-admin .layui-side {
-	width: 250px;
+	width: 220px;
+	transition: all .3s;
 }
 
 .layui-nav-tree {
-	width: 250px;
+	width: 220px;
 }
 
 .layui-side-scroll {
-	width: 270px;
+	width: 240px;
 }
 
 .layui-nav-tree .layui-nav-more {
@@ -22,15 +23,15 @@
 }
 
 .layui-body {
-	left: 250px;
+	left: 220px;
 }
 
 .layui-layout-admin .layui-footer {
-	left: 250px;
+	left: 220px;
 }
 
 .layui-layout-left {
-	left: 250px;
+	left: 220px;
 	padding: 0;
 }
 
@@ -56,6 +57,11 @@
 	background-color: #F0F2F5;
 }
 
+.layui-layout-admin .layui-header .layui-nav .layui-nav-child dd.layui-this a,.layui-nav-child dd.layui-this
+	{
+	background-color: transparent;
+}
+
 /**重写侧边栏的字体位置*/
 .layui-layout-admin .layui-side .layui-nav .layui-nav-item .layui-nav-child a
 	{
@@ -64,17 +70,85 @@
 
 /**重写header的logo部分颜色*/
 .layui-layout-admin .layui-logo {
-	width: 250px;
+	width: 220px;
 	background-color: #4E5465;
 	color: #fff;
 	font-size: 20px;
 	font-family: Myriad Pro, Helvetica Neue, Arial, Helvetica, sans-serif;
-	font-weight: 600;
+	font-weight: 200;
 	overflow: hidden;
+	transition: all .3s;
 }
 
+/*dialog超出显示*/
 .layui-layer-page .layui-layer-content {
 	overflow: visible !important;
+}
+
+/*侧导航折叠样式*/
+.nav-mini .layui-side .layui-nav .layui-nav-item>a {
+    overflow: visible;
+}
+
+.nav-mini .layui-side {
+	width: 60px;
+}
+
+.nav-mini .layui-nav {
+	width: 60px;
+}
+
+.nav-mini .layui-side-scroll {
+	width: 80px;
+}
+
+.nav-mini .layui-logo {
+	width: 60px;
+}
+
+.nav-mini .layui-side .layui-nav .layui-nav-item>a span {
+	display: none;
+}
+
+.nav-mini .layui-body {
+	left: 60px;
+}
+
+.nav-mini .layui-footer {
+	left: 60px;
+}
+
+.nav-mini .layui-layout-left {
+	left: 60px;
+}
+
+@media screen and (max-width: 750px) {
+	.layui-layout-admin .layui-side {
+		position: fixed;
+		top: 0;
+		left: -260px;
+		transition: all .3s;
+		-webkit-transition: all .3s;
+		z-index: 10000;
+	}
+	.nav-mini .layui-side {
+		left: 0;
+	}
+	.layui-body {
+		left: 0;
+	}
+	.layui-layout-admin .layui-footer {
+		left: 0;
+	}
+	.layui-header .layui-logo {
+		left: 54px;
+		text-align: left;
+		color: #4a4a4a;
+		background-color: transparent;
+	}
+	.layui-header .layui-layout-left {
+		left: 0;
+	}
 }
 
 /**内容标题样式*/
@@ -103,7 +177,7 @@
 	padding: 3px 6px;
 }
 
-.layui-btn:not(.layui-btn-lg):not(.layui-btn-sm):not(.layui-btn-xs){
+.layui-btn:not(.layui-btn-lg ):not(.layui-btn-sm):not(.layui-btn-xs) {
 	height: 34px;
 	line-height: 34px;
 }
@@ -139,8 +213,8 @@
 
 /*列表样式*/
 .site-dir li {
-    line-height: 26px;
-    margin-left: 20px;
-    overflow: visible;
-    list-style-type: disc;
+	line-height: 26px;
+	margin-left: 20px;
+	overflow: visible;
+	list-style-type: disc;
 }
