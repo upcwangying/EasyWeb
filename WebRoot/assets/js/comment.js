@@ -8,6 +8,10 @@ $(function() {
 		var sideNavExpand = !$('body').hasClass('nav-mini');
 		switchNav(!sideNavExpand);
 	});
+	//手机遮罩层点击事件
+	$('.site-mobile-shade').click(function(){
+		switchNav(true);
+	});
 });
 
 //获取当前token
@@ -37,14 +41,24 @@ function switchNav(expand){
 		return;
 	}
 	if (!expand) {
-        $('.layui-side .layui-nav .layui-nav-item.layui-nav-itemed').removeClass('layui-nav-itemed');
+        //$('.layui-side .layui-nav .layui-nav-item.layui-nav-itemed').removeClass('layui-nav-itemed');
         $('body').addClass('nav-mini');
     }else{
         $('body').removeClass('nav-mini');
     }
 	$('.nav-mini .layui-side .layui-nav .layui-nav-item').hover(function(){
-		layer.tips('只想提示地精准些', this);
+		var tipText = $(this).find('span').text();
+		if($('body').hasClass('nav-mini')&&document.body.clientWidth>750){
+			layer.tips(tipText, this);
+		}
 	},function(){
 		layer.closeAll('tips');
 	});
+}
+
+//导航栏展开
+function openNavItem(){
+	if($('body').hasClass('nav-mini')&&document.body.clientWidth>750){
+		switchNav(true);
+	}
 }

@@ -15,6 +15,9 @@ $(function() {
 	//点击导航切换页面时不刷新导航,其他方式切换页面要刷新导航
 	layui.element.on('nav(index-nav)', function(elem){
 		refreshNav = false;
+		if(document.body.clientWidth<=750){
+			switchNav(true);
+		}
 	});
 	//修改密码表单提交事件
 	layui.form.on('submit(pswSubmit)', function(data){
