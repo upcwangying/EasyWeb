@@ -1,4 +1,11 @@
 # EasyWeb
+
+## 计划
+ EasyWeb正在使用layui最新的layuiAdmin模板重构界面，敬请期待~
+ <br/>
+ [http://www.layui.com/admin/std/dist/views](http://www.layui.com/admin/std/dist/views)
+ <br/>
+ 
 ## 简介
 前后端分离模式的后端管理系统模板，前端页面使用路由实现单页面应用，后端接口遵循RESTful风格。<br/>
 演示地址：[http://115.159.40.243:8080/EasyWeb](http://115.159.40.243:8080/EasyWeb)。<br/>
